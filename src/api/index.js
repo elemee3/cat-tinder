@@ -28,6 +28,7 @@ let newCat = function (cat) {
   })
   .then(resp => {
     let json = resp.json()
+    console.log(json)
     return json
   })
 }

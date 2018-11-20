@@ -28,6 +28,7 @@ class NewCat extends Component {
     event.preventDefault()
     newCat(cat)
     .then(json => {
+      console.log(json)
       this.setState({status: "SAVED"})
     })
     .catch(err => {
