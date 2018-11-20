@@ -1,31 +1,35 @@
 import React, { Component } from 'react';
 import '../App.css';
 import { Grid, Col, Row, ListGroup, ListGroupItem } from 'react-bootstrap';
+import { getCats } from '../api';
 
 class Cats extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      cats: []
+    }
+  }
+
   render() {
     return (
       <Grid>
         <Row>
           <Col xs={12}>
             <ListGroup>
-              {this.props.cats.map((cat, index) =>{
+              {this.state.cats.map((cat, index) =>{
                 return (
                 <ListGroupItem
+                    href={'/cats/' + (index+1)}
                     key={index}
                     header={
                       <h4>
                         <span className='cat-name'>
                           {cat.name}
                         </span>
-                    -   <small className='cat-age'>{cat.age} years old</small>
                       </h4>
                   }>
-                  <span className='cat-enjoys'>
-                    Enjoys: {cat.enjoys}
-                  </span>
                   <br />
-                  <img src={cat.image} />
                 </ListGroupItem>
                 )
               })}
@@ -34,6 +38,15 @@ class Cats extends Component {
         </Row>
       </Grid>
     );
+  }
+
+  componentWillMount() {
+    getCats()
+    .then(APIcats => {
+      this.setState({
+        cats: APIcats
+      })
+    })
   }
 }
 

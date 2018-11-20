@@ -1,33 +1,40 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom'
 import '../App.css';
 import { FormControl } from 'react-bootstrap';
+import { newCat } from '../api/index';
 
 class NewCat extends Component {
   constructor(props){
-  super(props)
-  this.state = {
-    form:{
-      name: '',
-      age: '',
-      enjoys: ''
+    super(props)
+    this.state = {
+      status: "LOADING",
+      cat: {
+        name: '',
+        age: '',
+        enjoys: ''
       }
     }
   }
 
-  handleChange(event){
-    let {form } = this.state
-    form[event.target.name] = event.target.value
-    this.setState({form: form})
+  handleChange(event) {
+    let { cat } = this.state
+    cat[event.target.name] = event.target.value
+    this.setState({cat: cat})
   }
 
-  handleSubmit(event){
+  handleNewCat(event) {
+    let { cat } = this.state
     event.preventDefault()
-    this.handleNewCat(event)
+    newCat(cat)
+    .then(json => {
+      this.setState({status: "SAVED"})
+    })
+    .catch(err => {
+      console.log(err)
+    })
   }
 
-  handleNewCat(newCat){
-    
-  }
 
   render() {
     return (
@@ -37,27 +44,28 @@ class NewCat extends Component {
             name="name"
             placeholder="Enter Name Here"
             onChange={this.handleChange.bind(this)}
-            value={this.state.form.name}
+            value={this.state.cat.name}
           /><br/>
           <FormControl
-            name="Age"
-            type="text"
+            type="number"
+            name="age"
             placeholder="Enter Age Here"
             onChange={this.handleChange.bind(this)}
-            value={this.state.form.age}
+            value={this.state.cat.age}
           /><br/>
           <FormControl
             name="enjoys"
             type="text"
             placeholder="Enter Activities Here"
             onChange={this.handleChange.bind(this)}
-            value={this.state.form.enjoys}
+            value={this.state.cat.enjoys}
           /><br/>
           <FormControl
             type="submit"
             value="Add New Cat"
-            onClick={this.handleSubmit.bind(this)}
+            onClick={this.handleNewCat.bind(this)}
           />
+        {this.state.status === "SAVED" && <Redirect to="/cats" />}
       </div>
     );
   }

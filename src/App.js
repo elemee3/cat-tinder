@@ -5,15 +5,16 @@ import './App.css';
 import Cats from './pages/Cats';
 import NewCat from './pages/NewCat';
 import Header from './pages/Header';
+import Home from './pages/Home';
+import Show from './pages/Show';
 
-import { getCats } from './api';
-
-import Erebus from './kittypics/erebus.jpg';
-import Kris from './kittypics/kris.jpg';
-import G1 from './kittypics/g1.jpeg';
-import Dre2 from './kittypics/dre2.jpeg';
-import Snoop2 from './kittypics/snoop2.jpeg';
-import Cupcake from './kittypics/cupcake.jpg';
+// LOCAL IMAGES::
+// import Erebus from './kittypics/erebus.jpg';
+// import Kris from './kittypics/kris.jpg';
+// import G1 from './kittypics/g1.jpeg';
+// import Dre2 from './kittypics/dre2.jpeg';
+// import Snoop2 from './kittypics/snoop2.jpeg';
+// import Cupcake from './kittypics/cupcake.jpg';
 
 
 class App extends Component {
@@ -22,15 +23,6 @@ class App extends Component {
     this.state = {
       cats: []
     }
-  }
-
-  componentWillMount() {
-    getCats()
-    .then(APIcats => {
-      this.setState({
-        cats: APIcats
-      })
-    })
   }
 
   handleNewCat(newcat) {
@@ -47,8 +39,10 @@ class App extends Component {
         <Header />
             <Router>
                 <Switch>
-                    <Route exact path="/cats" render={(props) => <Cats cats={this.state.cats}/>} />
+                    <Route exact path="/cats" component={Cats} />
                     <Route exact path="/cats/new" render={(props) => <NewCat newcat={this.handleNewCat}/>} />
+                    <Route exact path="/cats/:id" component={Show} />
+                    <Route exact path="/" component={Home} />
                 </Switch>
             </Router>
       </div>
