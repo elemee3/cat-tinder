@@ -32,6 +32,18 @@ let newCat = function (cat) {
     return json
   })
 }
+
+let destroyCat = function (id) {
+  return fetch(BASE + '/cats/' + id, {
+    body: JSON.stringify(id),
+    method: "DELETE"
+  })
+  .then((resp) => {
+    let json = resp.json()
+    return json
+  })
+}
+
 export {
-  getCats, getCat, newCat
+  getCats, getCat, newCat, destroyCat
 }

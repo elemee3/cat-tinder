@@ -1,13 +1,24 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 import '../App.css';
-import { getCat } from '../api/index.js';
+import { getCat, destroyCat } from '../api/index.js';
 
 class Show extends Component {
   constructor(props) {
     super(props)
     this.state = {
+      status: 'PENDING',
       cat: undefined
     }
+  }
+
+  handleDestroy() {
+    destroyCat(this.state.cat.id)
+    .then( resp => this.setState({status: 'SUCCESS'}))
+  }
+
+  handleEdit() {
+
   }
 
   render() {
@@ -21,6 +32,9 @@ class Show extends Component {
         <div>
           <h2>{cat.name}, {cat.age} years old</h2>
           <h3>Enjoys: {cat.enjoys}</h3>
+          <button>Edit</button>
+          <button onClick={this.handleDestroy.bind(this)}>Destroy</button>
+          {this.state.status === 'SUCCESS' && <Redirect to="/cats" />}
         </div>
       )
     }

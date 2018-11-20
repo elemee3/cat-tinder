@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom'
+import { Redirect } from 'react-router-dom';
 import '../App.css';
 import { FormControl } from 'react-bootstrap';
 import { newCat } from '../api/index';
@@ -35,7 +35,6 @@ class NewCat extends Component {
       console.log(err)
     })
   }
-
 
   render() {
     return (

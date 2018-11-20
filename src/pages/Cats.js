@@ -20,7 +20,7 @@ class Cats extends Component {
               {this.state.cats.map((cat, index) =>{
                 return (
                 <ListGroupItem
-                    href={'/cats/' + (index+1)}
+                    href={'/cats/' + cat.id}
                     key={index}
                     header={
                       <h4>
@@ -40,7 +40,7 @@ class Cats extends Component {
     );
   }
 
-  componentWillMount() {
+  componentDidMount() {
     getCats()
     .then(APIcats => {
       this.setState({
