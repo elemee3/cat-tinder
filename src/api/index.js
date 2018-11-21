@@ -1,4 +1,4 @@
-const BASE = 'https://rocky-tor-59782.herokuapp.com'
+const BASE = process.env.API_KEY
 
 let getCats = function () {
   return fetch(BASE + '/cats')
